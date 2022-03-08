@@ -1,16 +1,48 @@
 type Query {
-  getUsers: [Users]
-  getMovies: [Movies]
+  findAllUsers: [Users]
+  findOneUser(_id: ID!): Users
+  findAllMovies: [Movies]
+  findOneMovie(_id: ID!): Movies
+}
+
+type Mutation {
+  addUser(input: UserInput!): String!
+  updateUser(_id: ID!, input: UpdateUserInput!): String!
+  deleteUser(_id: ID!): String!
+  addMovie(input: MovieInput!): String!
+  updateMovie(_id: ID!, input: MovieInput!): String!
+  deleteMovie(_id: ID!): String!
 }
 
 type Users {
+  _id: ID
   name: String
-  lastName: String
+  lastname: String
   email: String
   password: String
 }
 
+input UserInput {
+  name: String!
+  lastname: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String!
+  lastname: String!
+  email: String!
+}
+
 type Movies {
+  _id: ID
+  name: String
+  category: String
+  age: Int
+}
+
+input MovieInput {
   name: String
   category: String
   age: Int
