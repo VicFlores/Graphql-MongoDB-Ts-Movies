@@ -3,6 +3,7 @@ type Query {
   findOneUser(_id: ID!): Users
   findAllMovies: [Movies]
   findOneMovie(_id: ID!): Movies
+  LoginUser(input: LoginUser!): Token
 }
 
 type Mutation {
@@ -46,4 +47,13 @@ input MovieInput {
   name: String
   category: String
   age: Int
+}
+
+type Token {
+  token: String
+}
+
+input LoginUser {
+  email: String!
+  password: String!
 }

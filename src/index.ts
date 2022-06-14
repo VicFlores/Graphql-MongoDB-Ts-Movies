@@ -1,7 +1,8 @@
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { readFileSync } from 'fs';
-import { resolvers } from './graphql/resolvers';
+import { usersResolvers } from './graphql/resolvers/users.resolvers';
+import { moviesResolvers } from './graphql/resolvers/movies.resolvers';
 import express from 'express';
 import http from 'http';
 import path from 'path';
@@ -17,8 +18,12 @@ async function startApolloServer() {
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: [usersResolvers, moviesResolvers],
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: ({ req }) => {
+      const token = req.headers.authorization || '';
+      return { token };
+    },
   });
 
   await server.start();
